@@ -16,6 +16,7 @@ jQuery(document).ready(function ($) {
           jQuery("#show_upload_message").text(res.message).css({
             color: "green",
           });
+          jQuery("#bmcsv_csv_uploader_form")[0].reset();
         }
       },
     });
