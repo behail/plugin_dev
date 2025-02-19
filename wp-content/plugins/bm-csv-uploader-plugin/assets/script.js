@@ -12,7 +12,11 @@ jQuery(document).ready(function ($) {
       processData: false,
       contentType: false,
       success: function (res) {
-        console.log(res);
+        if (res.status == "success") {
+          jQuery("#show_upload_message").text(res.message).css({
+            color: "green",
+          });
+        }
       },
     });
   });

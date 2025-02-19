@@ -1,5 +1,5 @@
 <h3>Form Data</h3>
-
+<p id="show_upload_message"></p>
 <form action="javascript:void(0);" id="bmcsv_csv_uploader_form" enctype="multipart/form-data">
     <div>
         <label for="csv_file">CSV File</label>
