@@ -50,3 +50,57 @@ function bmcsv_create_table(){
     require_once(ABSPATH.'/wp-admin/includes/upgrade.php');
     dbDelta($sql_command);
 }
+
+// Add Script file
+add_action('wp_enqueue_scripts', 'bmcsv_add_script_file');
+function bmcsv_add_script_file(){
+    wp_enqueue_script('bmcsv-script-js', plugin_dir_url(__FILE__) . 'assets/script.js', array('jquery'));
+    wp_localize_script('bmcsv-script-js', 'bmcsv_object', array('ajax_url' => admin_url('admin-ajax.php')));
+}
+
+// Capture Ajax Request
+add_action('wp_ajax_bmcsv_submit_form_data', 'bmcsv_ajax_handler');// When user is logged in
+add_action('wp_ajax_nopriv_bmcsv_submit_form_data', 'bmcsv_ajax_handler');// When user is not logged in
+function bmcsv_ajax_handler(){
+
+    if($_FILES['csv_file']){
+        $csv_file = $_FILES['csv_file'];
+        $handle = fopen($csv_file['tmp_name'], 'r');
+
+        global $wpdb;
+        $table_prefix = $wpdb->prefix; //wp_
+        $table_name = $table_prefix . 'stident_data'; // wp_posts
+
+        if($handle){
+            $row = 0;
+            while(($data = fgetcsv($handle, 1000, ",")) !== FALSE){
+                if($row == 0){
+                    $row++;
+                    continue;
+                }
+                // Insert Data into DB Table
+                $wpdb->insert( $table_name, array(
+                    'name' => $data[1],
+                    'email' => $data[2],
+                    'age' => $data[3],
+                    'phone' => $data[4],
+                    'photo' => $data[5],
+                ));
+            }
+
+            fclose($handle);
+            echo json_encode(array(
+                'status' => 'success', 
+                'message' => 'File Uploaded Successfully'
+            ));
+        }
+
+    } else {
+        echo json_encode(array(
+            'status' => 'error', 
+            'message' => 'No File Uploaded'
+        ));
+    }
+
+    exit;
+}
