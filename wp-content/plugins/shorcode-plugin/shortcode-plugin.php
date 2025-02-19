@@ -21,3 +21,30 @@ function scp_show_static_message2($attributes) {
 
     return "<h3>Name: {$attributes['name']} -  Email: {$attributes['email']}</h3>";
 }
+
+// shortcode with DB operation
+add_shortcode('list_posts', 'scp_handle_list_posts');
+function scp_handle_list_posts(){
+    
+    global $wpdb;
+
+    $table_prefix = $wpdb->prefix; //wp_
+    $table_name = $table_prefix . 'posts'; // wp_posts
+
+    // Get posts whose post_type is post and post_status is publish
+    $posts = $wpdb->get_results(
+        "SELECT post_title FROM {$table_name} WHERE post_type = 'post' AND post_status = 'publish' "
+    );
+ 
+    if(count($posts) > 0){
+        $outputhtml = '<ul>';
+
+        foreach($posts as $post){
+            $outputhtml .= '<li>'.$post->post_title.'</li>';
+        }
+        $outputhtml .= '</ul>';
+
+        return $outputhtml;
+    }
+    return '<p>No posts found</p>';
+}
