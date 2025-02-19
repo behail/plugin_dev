@@ -23,7 +23,7 @@ function scp_show_static_message2($attributes) {
 }
 
 // shortcode with DB operation
-add_shortcode('list_posts', 'scp_handle_list_posts');
+add_shortcode('list_posts', 'scp_handle_list_with_query_class');
 function scp_handle_list_posts(){
     
     global $wpdb;
@@ -46,5 +46,29 @@ function scp_handle_list_posts(){
 
         return $outputhtml;
     }
+    return '<p>No posts found</p>';
+}
+
+function scp_handle_list_with_query_class($atts){
+    $attributes = shortcode_atts(array(
+        'number' => '5',
+    ), $atts,'list_posts');
+
+    $query = new WP_Query(array(
+        'posts_per_page' => $attributes['number'],
+        'post_status' => 'publish',
+        'order' => 'ASC',
+    ));
+
+    if($query->have_posts()){
+        $outputhtml = '<ul>';
+        while($query->have_posts()){
+            $query->the_post();
+            $outputhtml .= '<li> <a href="'.get_permalink().'">'.get_the_title().'</a></li>';
+        }
+        $outputhtml .= '</ul>';
+        return $outputhtml;
+    }
+
     return '<p>No posts found</p>';
 }
