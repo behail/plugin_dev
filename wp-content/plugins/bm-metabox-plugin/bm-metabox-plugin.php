@@ -46,3 +46,21 @@ function bmmb_save_metabox($post_id){
     update_post_meta($post_id, 'bmmb_meta_description', $_POST['bmmb_meta_description']);
     }
 }
+
+// Add meta tags in the Head tag
+add_action('wp_head', 'bmmb_add_meta_tags');
+function bmmb_add_meta_tags(){
+    if(is_page()){
+        global $post;
+        $post_id = $post->ID;
+        $title = get_post_meta($post_id, 'bmmb_meta_title', true);
+        $description = get_post_meta($post_id, 'bmmb_meta_description', true);
+
+        if(!empty($title)){
+            echo '<meta name="title" content="'.$title.'">';
+        }
+        if(!empty($description)){
+            echo '<meta name="description" content="'.$description.'">';
+        }
+    }
+}
