@@ -26,12 +26,12 @@ class Bmcw_Custom_Widget extends WP_Widget {
         </p>
         <p>
             <label for="<?php echo $this->get_field_id('bmcw_select_option') ?>">Display Type</label>
-            <select class="widefat" 
+            <select class="widefat bmcw_dd_option" 
                 id="<?php echo $this->get_field_id('bmcw_select_option') ?>"
                 name="<?php echo $this->get_field_name('bmcw_select_option') ?>" 
             >
-                <option value="">Recent Post</option>
-                <option value="">Static Message</option>
+                <option value="recent_post">Recent Post</option>
+                <option value="static_message">Static Message</option>
             </select>
         </p>
         <p id="bmcw_display_recent_post">
@@ -42,7 +42,7 @@ class Bmcw_Custom_Widget extends WP_Widget {
                     value="" class="widefat" 
             />
         </p>
-        <p id="bmcw_display_static_message">
+        <p id="bmcw_display_static_message" class="hide_element">
             <label for="<?php echo $this->get_field_id('bmcw_your_message') ?>">Static Message</label>
             <input type="text"  
                     name="<?php echo $this->get_field_name('bmcw_your_message') ?>"  
