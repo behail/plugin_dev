@@ -21,7 +21,7 @@ function bmmb_register_page_metabox(){
 }
 
 // Create layout for page metabox
-function bmmb_page_metabox_callback(){
+function bmmb_page_metabox_callback($post){
     //Include template file
     ob_start();
 
@@ -41,7 +41,7 @@ function bmmb_save_metabox($post_id){
     if(isset($_POST['bmmb_meta_title'])){
         update_post_meta($post_id, 'bmmb_meta_title', $_POST['bmmb_meta_title']);
     }
-    
+
     if(isset($_POST['bmmb_meta_description'])){
     update_post_meta($post_id, 'bmmb_meta_description', $_POST['bmmb_meta_description']);
     }
