@@ -73,7 +73,41 @@ class Bmcw_Custom_Widget extends WP_Widget {
 
     // Display Widget to the Frontend
     public function widget( $args, $instance ) {
-		
+		$title = apply_filters( 'widget_title', $instance['bmcw_title'] );
+
+        echo $args['before_widget'];
+            echo $args['before_title'];
+                echo $title;
+            echo $args['after_title'];
+
+            // Check for the display type
+            if($instance['bmcw_select_option'] == 'static_message'){
+                echo $instance['bmcw_your_message'];
+            
+            }else if($instance['bmcw_select_option'] == 'recent_post'){
+
+                $query = new WP_Query(array(
+                    'post_per_page' => $instance['bmcw_recent_post_count'],
+                    'post_status' => 'publish',
+                ));
+
+                if($query->have_posts()){
+                    echo '<ul>';
+                    while($query->have_posts()){
+                        $query->the_post();
+                        echo '<li> <a href="'.get_permalink().'">'.get_the_title().'</a></li>';
+                    }
+                    echo '</ui>';
+
+                    wp_reset_postdata();
+                }
+
+                
+            }
+
+        echo $args['after_widget'];
+
+        
 	}
     
 }
