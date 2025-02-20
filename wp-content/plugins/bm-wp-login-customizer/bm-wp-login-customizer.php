@@ -81,21 +81,66 @@
 
  // Text color setting
  function bmlp_wp_login_text_color_input(){
+    $text_color = get_option('bmwp_login_page_text_color', "")
     ?>
-        <input type="text" name="bmwp_login_page_text_color" placeholder="Text Color" >
+        <input type="text" name="bmwp_login_page_text_color" value="<?php echo $text_color; ?>" placeholder="Text Color" >
     <?php
  }
 
  // Background color setting
  function bmlp_wp_login_background_color_input(){
+    $bg_color = get_option('bmwp_login_page_background_color', "")
     ?>
-        <input type="text" name="bmwp_login_page_background_color" placeholder="Background Color" >
+        <input type="text" value="<?php echo $bg_color; ?>" name="bmwp_login_page_background_color" placeholder="Background Color" >
     <?php
  }
 
  // Logo setting
  function bmlp_wp_login_logo_input(){
+    $logo = get_option('bmwp_login_page_logo', "")
     ?>
-        <input type="text" name="bmwp_login_page_logo" placeholder="Logo URL" >
+        <input type="text" value="<?php echo $logo; ?>" name="bmwp_login_page_logo" placeholder="Logo URL" >
     <?php
+ }
+
+ // Render Custom Login page settings to Login screen
+ add_action('login_enqueue_scripts', 'bmlp_wp_login_customizer_setting');
+ function bmlp_wp_login_customizer_setting(){
+    $text_color = get_option('bmwp_login_page_text_color', "");
+    $bg_color = get_option('bmwp_login_page_background_color', "");
+    $logo = get_option('bmwp_login_page_logo', "");
+
+    ?>
+        <style>
+            <?php
+                if(!empty($text_color)){
+                    ?>
+                        body.login, body.login #backtoblog a, body.login #nav a, body.login #backtoblog a {
+                            color: <?php echo $text_color; ?>;
+                        }
+                    <?php
+                }
+                if(!empty($bg_color)){
+                    ?>
+                        body.login{
+                            background-color: <?php echo $bg_color; ?>;
+                        }
+                    <?php
+                    
+                }
+                if(!empty($logo)){
+                    ?>
+                        body.login div#login h1 a {
+                            background-image: url(<?php echo $logo; ?>);
+                            background-size: contain;
+                            width: 100%;
+                            height: 100px;
+                        }
+                    <?php
+                }
+            ?>
+        </style>
+    <?php
+
+   
  }
