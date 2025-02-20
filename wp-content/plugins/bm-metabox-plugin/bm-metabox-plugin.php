@@ -37,6 +37,15 @@ function bmmb_page_metabox_callback($post){
 // Save Data of metabox
 add_action('save_post', 'bmmb_save_metabox');
 function bmmb_save_metabox($post_id){
+    //Check and Verify Nonce Value
+    if(!wp_verify_nonce($_POST['bmmb_meta_nonce'], 'bmmb_save_metabox')){
+        return;
+    }
+
+    // Check and verify Auto save of WordPress
+    if(defined('DOING_AUTOSAVE') && DOING_AUTOSAVE){
+        return;
+    }
 
     if(isset($_POST['bmmb_meta_title'])){
         update_post_meta($post_id, 'bmmb_meta_title', $_POST['bmmb_meta_title']);

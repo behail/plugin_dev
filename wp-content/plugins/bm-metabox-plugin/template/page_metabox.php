@@ -2,6 +2,8 @@
     $post_id = isset($post->ID) ? $post->ID : "";
     $title = get_post_meta($post_id, 'bmmb_meta_title', true);
     $description = get_post_meta($post_id, 'bmmb_meta_description', true);
+
+    wp_nonce_field('bmmb_save_metabox', 'bmmb_meta_nonce');
 ?>
 
 <p>
