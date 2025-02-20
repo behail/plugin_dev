@@ -15,7 +15,9 @@ add_action('add_meta_boxes', 'bmmb_register_page_metabox');
 function bmmb_register_page_metabox(){
     add_meta_box('bmmb_page_metabox', 
                 'Custom BM Metabox - SEO', 
-                'bmmb_page_metabox_callback',);
+                'bmmb_page_metabox_callback',
+                'page'
+            );
 }
 
 // Create layout for page metabox
@@ -30,4 +32,17 @@ function bmmb_page_metabox_callback(){
     ob_end_clean();
 
     echo $template;
+}
+
+// Save Data of metabox
+add_action('save_post', 'bmmb_save_metabox');
+function bmmb_save_metabox($post_id){
+
+    if(isset($_POST['bmmb_meta_title'])){
+        update_post_meta($post_id, 'bmmb_meta_title', $_POST['bmmb_meta_title']);
+    }
+    
+    if(isset($_POST['bmmb_meta_description'])){
+    update_post_meta($post_id, 'bmmb_meta_description', $_POST['bmmb_meta_description']);
+    }
 }
