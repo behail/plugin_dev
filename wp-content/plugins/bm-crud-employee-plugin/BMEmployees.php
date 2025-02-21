@@ -101,12 +101,31 @@ class BMEmployees {
 
     // Proceed Ajax Request: Add Employee
     public function handleAddEmployeeFormData(){
-        echo json_encode(array(
-            'success' => true, 
-            'message' => 'Data saved successfully',
-            'data' => $_POST
-        ));
+        $name = sanitize_text_field($_POST['name']);
+        $email = sanitize_email($_POST['email']);
+        $designation = sanitize_text_field($_POST['designation']);
 
+        // File is empty
+
+        $this->wpdb->insert($this->table_name,[
+            'name' => $name,
+            'email' => $email,
+            'designation' => $designation,
+        ]);
+
+        $employee_id = $this->wpdb->insert_id;
+
+        if($employee_id > 0){
+            echo json_encode(array(
+                'success' => 1, 
+                'message' => 'Data saved successfully'
+            ));
+        } else {
+            echo json_encode(array(
+                'success' => 0, 
+                'message' => 'Error while saving data',
+            ));
+        }
         wp_die();
     }
 
