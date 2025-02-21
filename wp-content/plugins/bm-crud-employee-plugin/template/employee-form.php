@@ -42,11 +42,11 @@
               <input type="hidden" name="action" value="bm_edit_employee">
               <p>
                   <label for="emp_name">Name</label>
-                  <input required type="text" name="emp_name" id="emp_name" placeholder="Enter Name">
+                  <input required type="text" value="" name="emp_name" id="emp_name" placeholder="Enter Name">
               </p>
               <p>
                   <label for="emp_email">Email</label>
-                  <input required type="emp_email" name="emp_email" id="emp_email" placeholder="Enter Email">
+                  <input required type="emp_email" value=""  name="emp_email" id="emp_email" placeholder="Enter Email">
               </p>
               <p>
                   <label for="emp_designation">Designation</label>

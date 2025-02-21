@@ -155,4 +155,28 @@ class BMEmployees {
         ]);
 
     }
+
+    public function handleFetchEmployeeById(){
+        $employee_id = sanitize_text_field($_GET['employee_id']);
+
+        if($employee_id > 0 ){
+
+            $employeeData = $this->wpdb->get_row(
+                "SELECT * FROM {$this->table_name} WHERE id = {$employee_id}", ARRAY_A
+            );
+
+            return wp_send_json([
+                'success' => 1, 
+                'message' => 'Employee is fetched successfully',
+                'employee' => $employeeData
+            ]);
+
+        }else{
+            return wp_send_json([
+                'success' => 0, 
+                'message' => 'Employee Id not passed'
+            ]);
+        }
+       
+    }
 }

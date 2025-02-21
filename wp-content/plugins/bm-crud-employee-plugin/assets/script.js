@@ -71,6 +71,23 @@ jQuery(document).ready(() => {
   jQuery(document).on("click", ".btn_edit_employee", function () {
     jQuery(".edit_employee_form").removeClass("hide-element");
     jQuery("#btn_open_add_empl_form").addClass("hide-element");
+
+    $employe_id = jQuery(this).data("id");
+
+    jQuery.ajax({
+      url: bm_form_object.ajax_url,
+      data: {
+        action: "bm_fetch_employee_by_id",
+        employee_id: $employe_id,
+      },
+      method: "GET",
+      dataType: "json",
+      success: function (response) {
+        jQuery("#emp_name").val(response?.employee?.name);
+        jQuery("#emp_email").val(response?.employee?.email);
+        jQuery("#emp_designation").val(response?.employee?.designation);
+      },
+    });
   });
 
   // Close Edit Employee Form

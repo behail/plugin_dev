@@ -33,3 +33,4 @@ add_action('wp_enqueue_scripts', [$bmEmployeesObj, 'addAssetsToPlugin']);
 add_action('wp_ajax_bm_add_employee', [$bmEmployeesObj, 'handleAddEmployeeFormData']);
 add_action('wp_ajax_bm_fetch_all_employee', [$bmEmployeesObj, 'handleFetchAllEmployeeData']);
 add_action('wp_ajax_bm_delete_employee', [$bmEmployeesObj, 'handleDeleteEmployee']);
+add_action('wp_ajax_bm_fetch_employee_by_id', [$bmEmployeesObj, 'handleFetchEmployeeById']);
