@@ -16,7 +16,11 @@ jQuery(document).ready(() => {
       dataType: "json",
       contentType: false,
       processData: false,
-      success: function (response) {},
+      success: function (response) {
+        if (response.success) {
+          console.log(response.message);
+        }
+      },
     });
   });
 });

@@ -104,13 +104,18 @@ class BMEmployees {
         $name = sanitize_text_field($_POST['name']);
         $email = sanitize_email($_POST['email']);
         $designation = sanitize_text_field($_POST['designation']);
-
-        // File is empty
+        $profile_url = '';
+        // File 
+        if(isset($_FILES['profile_image']['name'])){
+            $file_uploaded = wp_handle_upload($_FILES['profile_image'], ['test_form' => false]);
+            $profile_url = $file_uploaded['url'];
+        }
 
         $this->wpdb->insert($this->table_name,[
             'name' => $name,
             'email' => $email,
             'designation' => $designation,
+            'profile_image' => $profile_url,	
         ]);
 
         $employee_id = $this->wpdb->insert_id;
