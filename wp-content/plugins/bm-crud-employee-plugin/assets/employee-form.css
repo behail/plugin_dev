@@ -64,3 +64,7 @@ td img {
 .btn_delete_employee {
   background: #dc3545;
 }
+
+.bm_employee_crud_plugin form p label.error {
+  color: red;
+}

@@ -83,7 +83,14 @@ class BMEmployees {
                 'bm_form_script', 
                 BMCP_DIR_URL . 'assets/script.js', 
                 array('jquery'),
-                
+
+            );
+        // Validator
+        wp_enqueue_script(
+                'bm_form_validator_script', 
+                BMCP_DIR_URL . 'assets/jquery.validate.min.js', 
+                array('jquery'),
+
             );
     }
 

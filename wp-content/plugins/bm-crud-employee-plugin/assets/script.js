@@ -1,3 +1,4 @@
 jQuery(document).ready(() => {
-  console.log("Hello World");
+  // Add Form Validation
+  jQuery("#bm-employee-form").validate();
 });

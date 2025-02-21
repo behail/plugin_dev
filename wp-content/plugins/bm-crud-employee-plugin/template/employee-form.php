@@ -3,15 +3,15 @@
     <form action="javascript:void(0);" id="bm-employee-form" enctype="multipart/form-data">
         <p>
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" placeholder="Enter Name">
+            <input required type="text" name="name" id="name" placeholder="Enter Name">
         </p>
         <p>
             <label for="email">Email</label>
-            <input type="email" name="email" id="email" placeholder="Enter Email">
+            <input required type="email" name="email" id="email" placeholder="Enter Email">
         </p>
         <p>
             <label for="designation">Designation</label>
-            <select name="designation" id="designation">
+            <select required name="designation" id="designation">
                 <option value="">--Select Designation--</option>
                 <option value="php">PHP Developer</option>
                 <option value="fullstack">Full Stack Developer</option>
