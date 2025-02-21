@@ -68,3 +68,7 @@ td img {
 .bm_employee_crud_plugin form p label.error {
   color: red;
 }
+
+.hide-element {
+  display: none;
+}

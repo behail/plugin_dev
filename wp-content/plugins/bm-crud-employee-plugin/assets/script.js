@@ -54,6 +54,30 @@ jQuery(document).ready(() => {
       });
     }
   });
+
+  // Open Add Employee Form
+  jQuery(document).on("click", "#btn_open_add_empl_form", function () {
+    jQuery(".add_employee_form").removeClass("hide-element");
+    jQuery(this).addClass("hide-element");
+  });
+
+  // Close Add Employee Form
+  jQuery(document).on("click", "#btn_close_add_empl_form", function () {
+    jQuery(".add_employee_form").addClass("hide-element");
+    jQuery("#btn_open_add_empl_form").removeClass("hide-element");
+  });
+
+  // Open Edit Employee Form
+  jQuery(document).on("click", ".btn_edit_employee", function () {
+    jQuery(".edit_employee_form").removeClass("hide-element");
+    jQuery("#btn_open_add_empl_form").addClass("hide-element");
+  });
+
+  // Close Edit Employee Form
+  jQuery(document).on("click", "#btn_close_edit_empl_form", function () {
+    jQuery(".edit_employee_form").addClass("hide-element");
+    jQuery("#btn_open_add_empl_form").removeClass("hide-element");
+  });
 });
 
 // Fetch all employee from DB table
