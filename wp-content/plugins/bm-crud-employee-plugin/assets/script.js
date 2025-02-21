@@ -87,6 +87,10 @@ jQuery(document).ready(() => {
         jQuery("#emp_email").val(response?.employee?.email);
         jQuery("#emp_designation").val(response?.employee?.designation);
         jQuery("#employee_id").val(response?.employee?.id);
+        jQuery("#emp_profile_image_preview").attr(
+          "src",
+          response?.employee?.profile_image
+        );
       },
     });
   });

@@ -62,6 +62,8 @@
               <p>
                   <label for="emp_profile_image">Profile Image</label>
                   <input type="file" name="emp_profile_image" id="emp_profile_image">
+                  <br />
+                  <img id="emp_profile_image_preview" alt="Profile Image Preview" style="width: 50px; height: 50px;" />
               </p>
               <p>
                   <button id="btn-update-data" type="submit">Save Update</button>
