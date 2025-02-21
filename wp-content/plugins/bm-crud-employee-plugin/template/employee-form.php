@@ -41,18 +41,8 @@
                 <th>#Action</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>1</td>
-                <td>Blen Mesganaw</td>
-                <td>beh@beh.com</td>
-                <td>PHP Developer</td>
-                <td><img src="https://www.behailu.com/wp-content/uploads/2020/03/Behailu-Mesganaw-Profile-Image.jpg" alt="Profile"></td>
-                <td>
-                    <button class="btn_edit_employee">Edit</button>
-                    <button class="btn_delete_employee">Delete</button>
-                </td>
-            </tr>
+        <tbody id="employee-list-body">
+            
         </tbody>
     </table>
 </div>

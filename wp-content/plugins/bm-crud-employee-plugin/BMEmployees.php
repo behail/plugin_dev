@@ -134,4 +134,16 @@ class BMEmployees {
         wp_die();
     }
 
+    function handleFetchAllEmployeeData(){
+        $employees = $this->wpdb->get_results("SELECT * FROM {$this->table_name}", ARRAY_A);
+
+      return  wp_send_json([
+            'success' => 1, 
+            'message' => 'Data fetched successfully',
+            'employees' => $employees
+        ]);
+
+        exit;
+    }
+
 }
