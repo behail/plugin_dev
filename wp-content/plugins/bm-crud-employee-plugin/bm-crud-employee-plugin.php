@@ -25,3 +25,12 @@ register_deactivation_hook(__FILE__, [$bmEmployeesObj, 'dropEmployeeTable']);
 
 // register shortcode
 add_shortcode('bm_employee-form', [$bmEmployeesObj, 'createEmployeeForm']);
+
+// Add Form CSS
+add_action('wp_enqueue_scripts', 'bm_add_form_style');
+function bm_add_form_style(){
+    wp_enqueue_style(
+            'bm_form_style', 
+            plugin_dir_url(__FILE__) . 'template/employee-form.css', 
+        );
+}

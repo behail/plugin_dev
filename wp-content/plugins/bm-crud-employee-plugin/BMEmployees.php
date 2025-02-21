@@ -61,9 +61,14 @@ class BMEmployees {
 
     // Render Employee Form Layout
     public function createEmployeeForm(){
-        $message = "<h1>Employee Form</h1>";
+        ob_start();
 
-        return $message;
+        include_once BMCP_DIR_PATH . 'template/employee-form.php';
+
+        $content = ob_get_contents();
+         ob_get_clean();
+
+         return $content;
     }
 
 }

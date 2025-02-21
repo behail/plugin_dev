@@ -1,0 +1,66 @@
+.bm_employee_crud_plugin {
+  max-width: 800px;
+  margin: 20px auto;
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+h3 {
+  color: #333;
+  text-align: center;
+}
+form p {
+  margin-bottom: 15px;
+}
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+button {
+  background: #0073aa;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+button:hover {
+  background: #005177;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+th,
+td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+th {
+  background: #0073aa;
+  color: white;
+}
+td img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.btn_edit_employee {
+  background: #ffc107;
+}
+.btn_delete_employee {
+  background: #dc3545;
+}
