@@ -71,4 +71,20 @@ class BMEmployees {
          return $content;
     }
 
+    // Add CSS and JS to plugin
+    public function addAssetsToPlugin(){
+        // CSS
+        wp_enqueue_style(
+                'bm_form_style', 
+                BMCP_DIR_URL . 'assets/employee-form.css', 
+            );
+        // JS
+        wp_enqueue_script(
+                'bm_form_script', 
+                BMCP_DIR_URL . 'assets/script.js', 
+                array('jquery'),
+                
+            );
+    }
+
 }

@@ -12,7 +12,7 @@
         <p>
             <label for="designation">Designation</label>
             <select name="designation" id="designation">
-                <option value="">Select Designation</option>
+                <option value="">--Select Designation--</option>
                 <option value="php">PHP Developer</option>
                 <option value="fullstack">Full Stack Developer</option>
                 <option value="wordpress">WordPress Developer</option>
