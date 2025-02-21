@@ -29,6 +29,31 @@ jQuery(document).ready(() => {
 
   // Render Employees
   fetchAllEmployee();
+
+  // Delete Functionality
+  jQuery(document).on("click", ".btn_delete_employee", function (event) {
+    if (confirm("Are you sure you want to delete this employee?")) {
+      var employeeId = jQuery(this).data("id");
+
+      jQuery.ajax({
+        url: bm_form_object.ajax_url,
+        data: {
+          action: "bm_delete_employee",
+          employee_id: employeeId,
+        },
+        method: "GET",
+        dataType: "json",
+        success: function (response) {
+          if (response.success) {
+            alert(response.message);
+            setTimeout(() => {
+              location.reload();
+            }, 1500);
+          }
+        },
+      });
+    }
+  });
 });
 
 // Fetch all employee from DB table

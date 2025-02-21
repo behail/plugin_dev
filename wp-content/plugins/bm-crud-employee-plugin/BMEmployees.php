@@ -134,16 +134,25 @@ class BMEmployees {
         wp_die();
     }
 
-    function handleFetchAllEmployeeData(){
+   public function handleFetchAllEmployeeData(){
         $employees = $this->wpdb->get_results("SELECT * FROM {$this->table_name}", ARRAY_A);
 
       return  wp_send_json([
             'success' => 1, 
-            'message' => 'Data fetched successfully',
+            'message' => 'Employees are fetched successfully',
             'employees' => $employees
         ]);
-
-        exit;
     }
 
+    public function handleDeleteEmployee(){
+        $employee_id = sanitize_text_field($_GET['employee_id']);
+
+        $this->wpdb->delete($this->table_name, ['id' => $employee_id]);
+
+        return wp_send_json([
+            'success' => 1, 
+            'message' => 'Employee is deleted successfully'
+        ]);
+
+    }
 }
