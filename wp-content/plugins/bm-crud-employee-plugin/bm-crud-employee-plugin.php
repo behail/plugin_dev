@@ -28,3 +28,6 @@ add_shortcode('bm_employee-form', [$bmEmployeesObj, 'createEmployeeForm']);
 
 // Add Form CSS
 add_action('wp_enqueue_scripts', [$bmEmployeesObj, 'addAssetsToPlugin']);
+
+// Process Ajax Request
+add_action('wp_ajax_bm_add_employee', [$bmEmployeesObj, 'handleAddEmployeeFormData']);

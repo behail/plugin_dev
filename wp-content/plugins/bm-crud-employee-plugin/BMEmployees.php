@@ -78,6 +78,14 @@ class BMEmployees {
                 'bm_form_style', 
                 BMCP_DIR_URL . 'assets/employee-form.css', 
             );
+         // Validator
+         wp_enqueue_script(
+            'bm_form_validator_script', 
+            BMCP_DIR_URL . 'assets/jquery.validate.min.js', 
+            array('jquery'),
+
+        );
+
         // JS
         wp_enqueue_script(
                 'bm_form_script', 
@@ -85,13 +93,21 @@ class BMEmployees {
                 array('jquery'),
 
             );
-        // Validator
-        wp_enqueue_script(
-                'bm_form_validator_script', 
-                BMCP_DIR_URL . 'assets/jquery.validate.min.js', 
-                array('jquery'),
+        wp_localize_script('bm_form_script', 'bm_form_object', array(
+            'ajax_url' => admin_url('admin-ajax.php'),
+        ));
+       
+    }
 
-            );
+    // Proceed Ajax Request: Add Employee
+    public function handleAddEmployeeFormData(){
+        echo json_encode(array(
+            'success' => true, 
+            'message' => 'Data saved successfully',
+            'data' => $_POST
+        ));
+
+        wp_die();
     }
 
 }

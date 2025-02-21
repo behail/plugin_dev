@@ -1,6 +1,7 @@
 <div class="bm_employee_crud_plugin">
     <h3>Add Employee</h3>
     <form action="javascript:void(0);" id="bm-employee-form" enctype="multipart/form-data">
+        <input type="hidden" name="action" value="bm_add_employee">
         <p>
             <label for="name">Name</label>
             <input required type="text" name="name" id="name" placeholder="Enter Name">
