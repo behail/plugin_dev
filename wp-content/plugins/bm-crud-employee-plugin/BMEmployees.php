@@ -184,20 +184,67 @@ class BMEmployees {
         $updated_email = sanitize_email($_POST['emp_email']);
         $updated_designation = sanitize_text_field($_POST['emp_designation']);
         $empId = sanitize_text_field($_POST['employee_id']);
+        $updated_profile_image = "";
 
-        $this->wpdb->update(
-            $this->table_name, 
-            [
-                'name' => $updated_name,
-                'email' => $updated_email,
-                'designation' => $updated_designation,
-            ],[
-                'id' => $empId
-            ]);
+        $employeeData = $this->getEmployeeById($empId);
 
+
+        if(!empty($employeeData)){
+            $updated_profile_image = $employeeData['profile_image'];
+            
+            $profile_url = isset($_FILES['emp_profile_image']['name']) ? $_FILES['emp_profile_image']['name']  : '';
+
+            // Check if profile image is uploaded
+            if(!empty($profile_url)){
+                $saved_profile_image = $employeeData['profile_image'];
+
+                if(! empty($saved_profile_image)){
+                    $wp_site_url = get_site_url();
+                    $file_path = str_replace($wp_site_url."/","", $saved_profile_image);
+                    if(file_exists(ABSPATH . $file_path)){
+                        // Remove file from upload directory
+                        unlink(ABSPATH . $file_path);
+                    }
+
+                    // Upload new profile image
+                    $file_uploaded = wp_handle_upload($_FILES['emp_profile_image'], ['test_form' => false]);
+                    $updated_profile_image  = $file_uploaded['url'];
+                }
+    
+            }
+    
+            $this->wpdb->update(
+                $this->table_name, 
+                [
+                    'name' => $updated_name,
+                    'email' => $updated_email,
+                    'designation' => $updated_designation,
+                    'profile_image' => $updated_profile_image
+                ],[
+                    'id' => $empId
+                ]);
+    
+                return wp_send_json([
+                    'success' => 1, 
+                    'message' => 'Employee is updated successfully'
+                ]);
+
+        }else {
             return wp_send_json([
-                'success' => 1, 
-                'message' => 'Employee is updated successfully'
+                'success' => 0, 
+                'message' => 'Employee not found'
             ]);
+        }
+
+       
+    }
+
+    // Get employeed by id
+    private function getEmployeeById($employee_id){
+        $employeeData = $this->wpdb->get_row(
+            "SELECT * FROM {$this->table_name} WHERE id = {$employee_id}", ARRAY_A
+        );
+
+        return $employeeData;
     }
 }
