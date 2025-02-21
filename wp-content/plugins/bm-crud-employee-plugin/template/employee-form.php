@@ -40,6 +40,7 @@
           <h3>Edit Employee</h3>
           <form action="javascript:void(0);" id="bm-edit_employee-form" enctype="multipart/form-data">
               <input type="hidden" name="action" value="bm_edit_employee">
+              <input type="hidden" name="employee_id" id="employee_id" value="">
               <p>
                   <label for="emp_name">Name</label>
                   <input required type="text" value="" name="emp_name" id="emp_name" placeholder="Enter Name">

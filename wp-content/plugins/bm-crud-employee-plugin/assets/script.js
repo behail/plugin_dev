@@ -86,6 +86,7 @@ jQuery(document).ready(() => {
         jQuery("#emp_name").val(response?.employee?.name);
         jQuery("#emp_email").val(response?.employee?.email);
         jQuery("#emp_designation").val(response?.employee?.designation);
+        jQuery("#employee_id").val(response?.employee?.id);
       },
     });
   });
@@ -94,6 +95,28 @@ jQuery(document).ready(() => {
   jQuery(document).on("click", "#btn_close_edit_empl_form", function () {
     jQuery(".edit_employee_form").addClass("hide-element");
     jQuery("#btn_open_add_empl_form").removeClass("hide-element");
+  });
+
+  // Edit Employee Form
+  jQuery("#bm-edit_employee-form").on("submit", function (event) {
+    event.preventDefault();
+
+    var formData = new FormData(this);
+
+    jQuery.ajax({
+      url: bm_form_object.ajax_url,
+      data: formData,
+      method: "POST",
+      dataType: "json",
+      contentType: false,
+      processData: false,
+      success: function (response) {
+        alert(response?.message);
+        setTimeout(() => {
+          location.reload();
+        }, 1500);
+      },
+    });
   });
 });
 

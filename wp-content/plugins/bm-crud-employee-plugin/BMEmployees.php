@@ -177,6 +177,27 @@ class BMEmployees {
                 'message' => 'Employee Id not passed'
             ]);
         }
-       
+    }
+
+    public function handleEditEmployee(){
+        $updated_name = sanitize_text_field($_POST['emp_name']);
+        $updated_email = sanitize_email($_POST['emp_email']);
+        $updated_designation = sanitize_text_field($_POST['emp_designation']);
+        $empId = sanitize_text_field($_POST['employee_id']);
+
+        $this->wpdb->update(
+            $this->table_name, 
+            [
+                'name' => $updated_name,
+                'email' => $updated_email,
+                'designation' => $updated_designation,
+            ],[
+                'id' => $empId
+            ]);
+
+            return wp_send_json([
+                'success' => 1, 
+                'message' => 'Employee is updated successfully'
+            ]);
     }
 }
