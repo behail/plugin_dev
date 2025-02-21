@@ -17,8 +17,11 @@ include_once BMCP_DIR_PATH .'BMEmployees.php';
 $bmEmployeesObj = new BMEmployees;
 
 // Create DB table
-register_activation_hook(__FILE__, [$bmEmployeesObj, 'createEmployeeTable']);
+register_activation_hook(__FILE__, [$bmEmployeesObj, 'callPluginActivationFunctions']);
 
 
 // Drop DB table
 register_deactivation_hook(__FILE__, [$bmEmployeesObj, 'dropEmployeeTable']);
+
+// register shortcode
+add_shortcode('bm_employee-form', [$bmEmployeesObj, 'createEmployeeForm']);

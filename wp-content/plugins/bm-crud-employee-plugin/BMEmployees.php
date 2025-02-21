@@ -23,6 +23,7 @@ class BMEmployees {
             `name` varchar(50) NOT NULL,
             `email` varchar(50) DEFAULT NULL,
             `designation` varchar(50) DEFAULT NULL,
+            `profile_image` varchar(220) DEFAULT NULL,
             PRIMARY KEY (`id`)
             ) ".$collate."
             ";
@@ -31,10 +32,38 @@ class BMEmployees {
 
     }
 
+    // Create dynamic page
+    public function createEmployeePage(){
+        $page_title = 'Employee CRUD System';
+        $page_content = "[bm_employee-form]";
+
+        if(!get_page_by_title($page_title)){
+            wp_insert_post(array(
+                'post_title' => $page_title,
+                'post_content' => $page_content,
+                'post_status' => 'publish',
+                'post_type' => 'page'
+            ));
+        }
+    }
+
+    public function callPluginActivationFunctions(){
+        $this->createEmployeeTable();
+        $this->createEmployeePage();
+    }
+
     // Drop DB table
     public function dropEmployeeTable(){
        $delete_command = "DROP TABLE IF EXISTS {$this->table_name}";
-       
+
        $this->wpdb->query($delete_command);
     }
+
+    // Render Employee Form Layout
+    public function createEmployeeForm(){
+        $message = "<h1>Employee Form</h1>";
+
+        return $message;
+    }
+
 }
