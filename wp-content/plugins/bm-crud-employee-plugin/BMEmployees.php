@@ -107,6 +107,13 @@ class BMEmployees {
         $profile_url = '';
         // File 
         if(isset($_FILES['profile_image']['name'])){
+
+            $uploadFile = $_FILES['profile_image'];
+            $originalFileName = pathinfo($uploadFile['name'], PATHINFO_FILENAME);
+            $fileExtension = pathinfo($uploadFile['name'], PATHINFO_EXTENSION);
+            $newFileName = $originalFileName . '-' . time() . '.' . $fileExtension;
+            $_FILES['profile_image']['name'] = $newFileName;
+
             $file_uploaded = wp_handle_upload($_FILES['profile_image'], ['test_form' => false]);
             $profile_url = $file_uploaded['url'];
         }
@@ -205,6 +212,12 @@ class BMEmployees {
                         // Remove file from upload directory
                         unlink(ABSPATH . $file_path);
                     }
+
+                    $uploadFile = $_FILES['emp_profile_image'];
+                    $originalFileName = pathinfo($uploadFile['name'], PATHINFO_FILENAME);
+                    $fileExtension = pathinfo($uploadFile['name'], PATHINFO_EXTENSION);
+                    $newFileName = $originalFileName . '-' . time() . '.' . $fileExtension;
+                    $_FILES['emp_profile_image']['name'] = $newFileName;
 
                     // Upload new profile image
                     $file_uploaded = wp_handle_upload($_FILES['emp_profile_image'], ['test_form' => false]);
