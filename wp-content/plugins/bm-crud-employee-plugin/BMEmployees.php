@@ -197,20 +197,22 @@ class BMEmployees {
 
 
         if(!empty($employeeData)){
-            $updated_profile_image = $employeeData['profile_image'];
+            // Get old profile image
+            $old_profile_image = $employeeData['profile_image'];
             
+            // New file Object
             $profile_url = isset($_FILES['emp_profile_image']['name']) ? $_FILES['emp_profile_image']['name']  : '';
 
             // Check if profile image is uploaded
             if(!empty($profile_url)){
-                $saved_profile_image = $employeeData['profile_image'];
-
-                if(! empty($saved_profile_image)){
-                    $wp_site_url = get_site_url();
-                    $file_path = str_replace($wp_site_url."/","", $saved_profile_image);
+                
+                    if(! empty($old_profile_image)){
+                        $wp_site_url = get_site_url();
+                    $file_path = str_replace($wp_site_url."/","", $old_profile_image);
                     if(file_exists(ABSPATH . $file_path)){
                         // Remove file from upload directory
                         unlink(ABSPATH . $file_path);
+                    }
                     }
 
                     $uploadFile = $_FILES['emp_profile_image'];
@@ -222,7 +224,7 @@ class BMEmployees {
                     // Upload new profile image
                     $file_uploaded = wp_handle_upload($_FILES['emp_profile_image'], ['test_form' => false]);
                     $updated_profile_image  = $file_uploaded['url'];
-                }
+              
     
             }
     
