@@ -33,14 +33,30 @@ function bmcapi_create_student_table(){
 }
 
 add_action('rest_api_init', function () {
+    // Get students
     register_rest_route(''.P_REFIX.'/v1', '/students', array(
         'methods' => 'GET',
         'callback' => ''.P_REFIX.'_get_students',
     )); 
 
-    register_rest_route(''.P_REFIX.'/v1', '/students', array(
+    // Add students
+    register_rest_route(''.P_REFIX.'/v1', '/student', array(
         'methods' => 'POST',
-        'callback' => ''.P_REFIX.'_add_students',
+        'callback' => ''.P_REFIX.'_add_student',
+        'args' => array(
+            'name' => array(
+                'type' => 'string',
+                'required' => true,
+            ),
+            'email' => array(
+                'type' => 'string',
+                'required' => true,
+            ),
+            'phone' => array(
+                'type' => 'string',
+                "required" => false,
+            ),
+        )
     ));
 
     register_rest_route(''.P_REFIX.'/v1', '/students/(?P<id>\d+)', array(
@@ -59,6 +75,7 @@ add_action('rest_api_init', function () {
     ));
 });
 
+// Get students
 function bmcapi_get_students(){
 
     global $wpdb;
@@ -82,4 +99,38 @@ function bmcapi_get_students(){
     ]);
 
     
+}
+
+// Add students
+function bmcapi_add_student($request){
+
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'students_table';
+
+    $name = $request->get_param('name');
+    $email = $request->get_param('email');
+    $phone = $request->get_param('phone');
+
+    $insert_id = $wpdb->insert($table_name, [
+        'name' => $name,
+        'email' => $email,
+        'phone' => $phone
+    ]);
+
+    if($insert_id > 0){
+        return rest_ensure_response([
+            'status' => true,
+            'message' => 'Student is added successfully',
+            'data' => $request->get_params()
+        ]);
+    } else {
+        return rest_ensure_response([
+            'status' => false,
+            'message' => 'Failed to add student',
+            'data' => $request->get_params()
+        ]);
+    }
+
+
+   
 }
