@@ -84,9 +84,11 @@ add_action('rest_api_init', function () {
         ),
     ));
 
-    register_rest_route(''.P_REFIX.'/v1', '/students/(?P<id>\d+)', array(
+
+    // Delete Student
+    register_rest_route(''.P_REFIX.'/v1', '/student/(?P<id>\d+)', array(
         'methods' => 'DELETE',
-        'callback' => ''.P_REFIX.'_delete_students',
+        'callback' => ''.P_REFIX.'_delete_student',
     ));
 });
 
@@ -196,4 +198,32 @@ function bmcapi_update_student($request){
 
 
    
+}
+
+// Delete Student
+function bmcapi_delete_student($request){
+
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'students_table';
+    $id = $request['id'];
+
+    $student = $wpdb->get_row("SELECT * FROM {$table_name} WHERE id = {$id}");
+
+    if(!empty($student)){
+        $wpdb->delete(
+            $table_name,
+            [
+                'id' => $id,
+            ]
+        );
+        return rest_ensure_response([
+            'status' => true,
+            'message' => 'Successfully deleted student'
+        ]);
+    } else {
+        return rest_ensure_response([
+            'status' => false,
+            'message' => 'Student does not exist',
+        ]);
+    }
 }
