@@ -33,6 +33,58 @@ function bmwcp_add_menu(){
     );
 }
 
+// Add Style to admin page
+add_action('admin_enqueue_scripts', 'bmwcp_add_style');
+
+function bmwcp_add_style(){
+        wp_enqueue_style('bmwcp-style', plugin_dir_url(__FILE__) . 'assets/style.css');
+}
+
 function bmwcp_create_product_callback(){
-    echo '<h3>Add New Product</h3>';
+    ob_start();
+
+    include_once plugin_dir_path(__FILE__) . 'template/add-woocom-product-form.php';
+
+    $template = ob_get_contents();
+
+    ob_end_clean();
+
+    echo $template;
+}
+
+// Admin init
+add_action('admin_init', 'bmwcp_create_product');
+function bmwcp_create_product(){
+    if(isset($_POST['bmwcp_submit'])){
+
+        // Verift nonce
+        if(!wp_verify_nonce($_POST['bmwcp_create_product_nonce'], 'bmwcp_create_product')){
+            return;
+        }
+
+        // Check if woocommerce is active
+        if(class_exists("WC_Product_Simple")){
+            $prodObj = new WC_Product_Simple();
+
+            // Product Parameters
+            $prodObj->set_name($_POST['bmwcp_name']);
+            $prodObj->set_regular_price($_POST['bmwcp_regular_price']);
+            $prodObj->set_sale_price($_POST['bmwcp_sale_price']);
+            $prodObj->set_sku($_POST['bmwcp_sku']);
+            $prodObj->set_short_description($_POST['bmwcp_short_description']);
+            $prodObj->set_description($_POST['bmwcp_description']);
+            $prodObj->set_status('publish');
+
+            // Product Images
+            if(isset($_FILES['product_image'])){
+                $prodObj->set_image_id($_FILES['product_image']['name']);
+            }
+
+            // Save Product
+            $prodObj->save();
+
+            echo '<div class="notice notice-success "><p>Product created successfully</p></div>';
+        }        
+        
+    }
 }
