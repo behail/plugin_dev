@@ -24,8 +24,10 @@
         <textarea id="description" required name="bmwcp_description" rows="4"></textarea>
 
         <label for="product_image">Product Image:</label>
-        <input type="file" id="product_image" name="product_image" accept="image/*" required>
-
+        <button type="button" id="bmwcp_upload_product_image">Upload Image</button>
+        <input type="hidden" name="product_image_media_id" id="product_image_media_id"  />
+        <img src="" id="product_image_preview" style="width: 100px; height: 100px;" />
+        <br />
         <button type="submit" name="bmwcp_submit">Submit</button>
     </form>
 </div>

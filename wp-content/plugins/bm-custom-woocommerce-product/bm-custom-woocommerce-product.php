@@ -38,6 +38,11 @@ add_action('admin_enqueue_scripts', 'bmwcp_add_style');
 
 function bmwcp_add_style(){
         wp_enqueue_style('bmwcp-style', plugin_dir_url(__FILE__) . 'assets/style.css');
+
+        wp_enqueue_media();
+
+        // Add Script
+        wp_enqueue_script('bmwcp-script', plugin_dir_url(__FILE__) . 'assets/script.js');
 }
 
 function bmwcp_create_product_callback(){
@@ -74,16 +79,16 @@ function bmwcp_create_product(){
             $prodObj->set_short_description($_POST['bmwcp_short_description']);
             $prodObj->set_description($_POST['bmwcp_description']);
             $prodObj->set_status('publish');
-
-            // Product Images
-            if(isset($_FILES['product_image'])){
-                $prodObj->set_image_id($_FILES['product_image']['name']);
-            }
+            $prodObj->set_image_id($_POST['product_image_media_id']);
 
             // Save Product
-            $prodObj->save();
-
-            echo '<div class="notice notice-success "><p>Product created successfully</p></div>';
+           $prodId = $prodObj->save();
+            if($prodId > 0){
+                add_action('admin_notices', function(){
+                    echo '<div class="notice notice-success "><p>Product created successfully</p></div>';
+                });
+            }
+      
         }        
         
     }
