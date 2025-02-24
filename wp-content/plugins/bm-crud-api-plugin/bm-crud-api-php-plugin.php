@@ -9,7 +9,9 @@ Author: Behailu Mesganaw
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-register_activation_hook(__FILE__, 'bmcapi_create_student_table');
+define('P_REFIX', 'bmcapi');
+
+register_activation_hook(__FILE__, ''.P_REFIX.'_create_student_table');
 function bmcapi_create_student_table(){
 
     global $wpdb;
@@ -30,4 +32,54 @@ function bmcapi_create_student_table(){
     dbDelta($createTableCommand);
 }
 
+add_action('rest_api_init', function () {
+    register_rest_route(''.P_REFIX.'/v1', '/students', array(
+        'methods' => 'GET',
+        'callback' => ''.P_REFIX.'_get_students',
+    )); 
 
+    register_rest_route(''.P_REFIX.'/v1', '/students', array(
+        'methods' => 'POST',
+        'callback' => ''.P_REFIX.'_add_students',
+    ));
+
+    register_rest_route(''.P_REFIX.'/v1', '/students/(?P<id>\d+)', array(
+        'methods' => 'GET',
+        'callback' => ''.P_REFIX.'_get_students_by_id',
+    ));
+
+    register_rest_route(''.P_REFIX.'/v1', '/students/(?P<id>\d+)', array(
+        'methods' => 'PUT',
+        'callback' => ''.P_REFIX.'_update_students',
+    ));
+
+    register_rest_route(''.P_REFIX.'/v1', '/students/(?P<id>\d+)', array(
+        'methods' => 'DELETE',
+        'callback' => ''.P_REFIX.'_delete_students',
+    ));
+});
+
+function bmcapi_get_students(){
+
+    global $wpdb;
+
+    $students = $wpdb->get_results(
+        "SELECT * FROM ".$wpdb->prefix."students_table", ARRAY_A
+    );
+
+    if(count($students) == 0){
+        return rest_ensure_response([
+            'status' => true,
+            'message' => 'No students found'
+        ]);
+     
+    }
+    
+    return rest_ensure_response([
+        'status' => true,
+        'message' => 'Studenst are fetched successfully',
+        'data' => $students
+    ]);
+
+    
+}
