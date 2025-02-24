@@ -64,9 +64,24 @@ add_action('rest_api_init', function () {
         'callback' => ''.P_REFIX.'_get_students_by_id',
     ));
 
-    register_rest_route(''.P_REFIX.'/v1', '/students/(?P<id>\d+)', array(
+    // Update student
+    register_rest_route(''.P_REFIX.'/v1', '/student/(?P<id>\d+)', array(
         'methods' => 'PUT',
-        'callback' => ''.P_REFIX.'_update_students',
+        'callback' => ''.P_REFIX.'_update_student',
+        'args' => array(
+            'name' => array(
+                'type' => 'string',
+                'required' => true,
+            ),
+            'email' => array(
+                'type' => 'string',
+                'required' => true,
+            ),
+            'phone' => array(
+                'type' => 'string',
+                'required' => false,
+            ),
+        ),
     ));
 
     register_rest_route(''.P_REFIX.'/v1', '/students/(?P<id>\d+)', array(
@@ -102,7 +117,7 @@ function bmcapi_get_students(){
 }
 
 // Add students
-function bmcapi_add_student($request){
+function bmcapi_add_student($request){  
 
     global $wpdb;
     $table_name = $wpdb->prefix . 'students_table';
@@ -130,6 +145,54 @@ function bmcapi_add_student($request){
             'data' => $request->get_params()
         ]);
     }
+
+
+   
+}
+
+// Update Student
+function bmcapi_update_student($request){
+
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'students_table';
+
+    $id = $request['id'];
+    $name = $request['name'];
+    $email = $request['email'];
+    $phone = $request['phone'];
+
+    $isStudentExist = $wpdb->get_var("SELECT id FROM {$table_name} WHERE id = {$id}");
+
+    if(!empty($isStudentExist)){
+        $wpdb->update(
+            $table_name,
+            [
+                'name' => $name,
+                'email' => $email,
+                'phone' => $phone,
+            ],
+            [
+                'id' => $id,
+            ]
+        );
+        return rest_ensure_response([
+            'status' => true,
+            'message' => 'Successfully updated student',
+            'data' => [
+                'id' => $id,
+                'name' => $name,
+                'email' => $email,
+                'phone' => $phone,
+            ],
+            "isStudentExist" => $isStudentExist,
+        ]);
+    } else {
+        return rest_ensure_response([
+            'status' => false,
+            'message' => 'Student does not exist',
+        ]);
+    }
+        
 
 
    
